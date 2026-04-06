@@ -16,7 +16,7 @@ export const experiences: Experience[] = [
     date: "2025 – Present",
     role: "Front-End Mobile Developer",
     org: "Trinity Fitness",
-    desc: "Building the coach-facing Flutter mobile app for a dual-interface fitness platform, integrated with a FastAPI + PostgreSQL backend.",
+    desc: "Contributed to an ongoing fitness platform project, responsible for building the coach-facing Flutter mobile app. Worked with senior developers on integrating the mobile client with a FastAPI + PostgreSQL backend for seamless data sync between coaches and clients.",
   },
   {
     date: "2024 – Present",

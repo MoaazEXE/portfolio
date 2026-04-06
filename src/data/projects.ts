@@ -22,11 +22,11 @@ export const projects: Project[] = [
   {
     id: "trinity-fitness",
     title: "Trinity Fitness App",
-    role: "Front-End Mobile Developer",
+    role: "Front-End Mobile Developer (Contributor)",
     year: "2025",
     status: "in progress",
     description:
-      "Building the coach-facing mobile app for a dual-interface fitness platform. Integrated with a central FastAPI and PostgreSQL backend for seamless data sync between coaches and clients.",
+      "Contributed to an ongoing dual-interface fitness platform project, responsible for building the coach-facing Flutter mobile app. Worked with senior developers on integrating the mobile client with a central FastAPI and PostgreSQL backend for seamless data sync between coaches and clients.",
     tags: ["Flutter", "Dart", "FastAPI", "PostgreSQL"],
   },
   {
