@@ -36,6 +36,7 @@ const {
       rel="stylesheet"
     />
     <title>{title}</title>
+    <Analytics />
   </head>
   <body class="font-sans antialiased">
     <Nav />
@@ -43,7 +44,6 @@ const {
       <slot />
     </main>
     <Footer />
-    <Analytics />
     <script>
       const observer = new IntersectionObserver(
         (entries) => {
