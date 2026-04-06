@@ -1,0 +1,96 @@
+---
+import { projects } from "../data/projects";
+---
+
+<section id="projects" class="px-6 md:px-12 py-24 max-w-6xl mx-auto">
+  <div class="fade-in-up mb-12">
+    <span class="font-mono text-muted text-xs tracking-[0.2em] uppercase block mb-2">// 02 — projects</span>
+    <h2 class="font-sans font-bold text-3xl md:text-4xl text-white">
+      What I've Built
+      <span class="block w-12 h-1 bg-accent mt-3"></span>
+    </h2>
+  </div>
+
+  <!-- Filters -->
+  <div class="flex gap-3 mb-8 fade-in-up">
+    <button
+      class="filter-btn active font-mono text-xs uppercase tracking-[0.15em] px-4 py-2 border border-border text-muted hover:text-accent hover:border-accent transition-all duration-300"
+      data-filter="all"
+    >
+      All
+    </button>
+    <button
+      class="filter-btn font-mono text-xs uppercase tracking-[0.15em] px-4 py-2 border border-border text-muted hover:text-accent hover:border-accent transition-all duration-300"
+      data-filter="shipped"
+    >
+      Shipped
+    </button>
+    <button
+      class="filter-btn font-mono text-xs uppercase tracking-[0.15em] px-4 py-2 border border-border text-muted hover:text-accent hover:border-accent transition-all duration-300"
+      data-filter="in progress"
+    >
+      In Progress
+    </button>
+  </div>
+
+  <!-- Grid -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));">
+    {
+      projects.map((project, i) => (
+        <div
+          class="project-card group relative bg-card border border-border p-6 flex flex-col gap-3 transition-all duration-300 hover:-translate-y-0.5 fade-in-up overflow-hidden"
+          data-status={project.status}
+        >
+          <div class="absolute top-0 left-0 right-0 h-px bg-accent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+          <span class="font-mono text-xs text-muted">
+            {String(i + 1).padStart(2, "0")}/ {project.role}
+          </span>
+          <h3 class="font-sans font-bold text-lg text-white">{project.title}</h3>
+          <p class="text-muted text-sm leading-relaxed flex-1">{project.description}</p>
+          <div class="flex items-center gap-2 mt-1">
+            <span
+              class={`font-mono text-xs px-2 py-0.5 rounded-sm ${
+                project.status === "shipped"
+                  ? "text-accent bg-accent/10"
+                  : "text-accent-blue bg-accent-blue/10"
+              }`}
+            >
+              {project.status}
+            </span>
+            <span class="font-mono text-xs text-muted">{project.year}</span>
+          </div>
+          <div class="flex flex-wrap gap-1.5 mt-2">
+            {project.tags.map((tag) => (
+              <span class="font-mono text-[10px] text-muted border border-border px-2 py-0.5">
+                {tag}
+              </span>
+            ))}
+          </div>
+        </div>
+      ))
+    }
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll(".filter-btn").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      document.querySelectorAll(".filter-btn").forEach((b) => b.classList.remove("active", "!text-accent", "!border-accent"));
+      btn.classList.add("active", "!text-accent", "!border-accent");
+
+      const filter = (btn as HTMLElement).dataset.filter;
+      document.querySelectorAll(".project-card").forEach((card) => {
+        const status = (card as HTMLElement).dataset.status;
+        if (filter === "all" || status === filter) {
+          (card as HTMLElement).style.display = "";
+        } else {
+          (card as HTMLElement).style.display = "none";
+        }
+      });
+    });
+  });
+
+  // Set initial active style
+  const firstBtn = document.querySelector(".filter-btn.active");
+  firstBtn?.classList.add("!text-accent", "!border-accent");
+</script>
