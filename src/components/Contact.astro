@@ -67,37 +67,83 @@
 
     <!-- Right: form -->
     <div class="flex flex-col gap-4 fade-in-up">
-      <form class="flex flex-col gap-4">
+      <form id="contact-form" class="flex flex-col gap-4">
         <input
           type="text"
+          name="name"
           placeholder="Name"
-          disabled
-          class="bg-card border border-border text-primary placeholder-muted px-4 py-3 font-mono text-sm focus:outline-none focus:border-accent transition-colors duration-300 disabled:opacity-50"
+          required
+          class="bg-card border border-border text-primary placeholder-muted px-4 py-3 font-mono text-sm focus:outline-none focus:border-accent transition-colors duration-300"
         />
         <input
           type="email"
+          name="email"
           placeholder="Email"
-          disabled
-          class="bg-card border border-border text-primary placeholder-muted px-4 py-3 font-mono text-sm focus:outline-none focus:border-accent transition-colors duration-300 disabled:opacity-50"
+          required
+          class="bg-card border border-border text-primary placeholder-muted px-4 py-3 font-mono text-sm focus:outline-none focus:border-accent transition-colors duration-300"
         />
         <textarea
+          name="message"
           placeholder="Message"
           rows="5"
-          disabled
-          class="bg-card border border-border text-primary placeholder-muted px-4 py-3 font-mono text-sm focus:outline-none focus:border-accent transition-colors duration-300 resize-none disabled:opacity-50"
+          required
+          class="bg-card border border-border text-primary placeholder-muted px-4 py-3 font-mono text-sm focus:outline-none focus:border-accent transition-colors duration-300 resize-none"
         ></textarea>
         <button
           type="submit"
-          disabled
-          class="bg-accent text-base font-mono text-sm font-bold px-6 py-3 hover:brightness-110 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+          id="contact-submit"
+          class="bg-accent text-base font-mono text-sm font-bold px-6 py-3 hover:brightness-110 transition-all duration-300"
           style="clip-path: polygon(0 0, 100% 0, 95% 100%, 0% 100%);"
         >
           Send message
         </button>
       </form>
-      <p class="font-mono text-xs text-muted">
-        Form coming soon — reach out directly via email or WhatsApp for now.
-      </p>
+      <p id="contact-status" class="font-mono text-xs text-muted hidden"></p>
     </div>
   </div>
 </section>
+
+<script>
+  import { createClient } from "@supabase/supabase-js";
+
+  const supabase = createClient(
+    import.meta.env.PUBLIC_SUPABASE_URL,
+    import.meta.env.PUBLIC_SUPABASE_KEY
+  );
+
+  const form = document.getElementById("contact-form") as HTMLFormElement;
+  const status = document.getElementById("contact-status") as HTMLElement;
+  const submitBtn = document.getElementById("contact-submit") as HTMLButtonElement;
+
+  form?.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(form);
+    const name = formData.get("name") as string;
+    const email = formData.get("email") as string;
+    const message = formData.get("message") as string;
+
+    submitBtn.textContent = "Sending...";
+    submitBtn.disabled = true;
+
+    const { error } = await supabase.from("messages").insert([
+      { name, email, message },
+    ]);
+
+    status.classList.remove("hidden");
+
+    if (error) {
+      status.textContent = "Something went wrong. Please try email or WhatsApp instead.";
+      status.classList.add("text-red-400");
+      status.classList.remove("text-accent");
+    } else {
+      status.textContent = "Message sent! I'll get back to you soon.";
+      status.classList.add("text-accent");
+      status.classList.remove("text-red-400");
+      form.reset();
+    }
+
+    submitBtn.textContent = "Send message";
+    submitBtn.disabled = false;
+  });
+</script>
