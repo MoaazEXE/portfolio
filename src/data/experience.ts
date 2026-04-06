@@ -7,10 +7,10 @@ export interface Experience {
 
 export const experiences: Experience[] = [
   {
-    date: "2024 – Present",
-    role: "Tech Lead",
+    date: "Feb 2026 – Present",
+    role: "Tech Lead & Developer",
     org: "UMISA — Universiti Malaya",
-    desc: "Leading the technical direction of Digital UMISA (umisa.net). Architected the Sanity CMS + Supabase integration, managed sprint delivery, and led a team of developers and a designer.",
+    desc: "Leading the technical direction of Digital UMISA (umisa.net). Architected the Sanity CMS + Supabase integration, managed sprint delivery, and led a team of developers and a designer — while actively writing code. After launching v1, continuing to develop new features and maintaining the platform post-launch.",
   },
   {
     date: "2025 – Present",
@@ -19,16 +19,10 @@ export const experiences: Experience[] = [
     desc: "Building the coach-facing Flutter mobile app for a dual-interface fitness platform, integrated with a FastAPI + PostgreSQL backend.",
   },
   {
-    date: "2025 – Present",
-    role: "Co-Founder & Developer",
-    org: "RentEasy (SaaS)",
-    desc: "Building a lean SaaS rental management tool for Malaysian small landlords with my brother. Handling product, architecture, and front-end.",
-  },
-  {
     date: "2024 – Present",
-    role: "Bachelor in Computer Science",
+    role: "Bachelor in Software Engineering",
     org: "Universiti Malaya",
-    desc: "CGPA: 3.0/4.0. Relevant courses: Mobile App Development, Database, Project Management, Machine Learning, Data Structures, Fundamentals of Programming.",
+    desc: "CGPA 3.00++. Relevant courses: Mobile App Development, Database, Project Management, Machine Learning, Data Structures, Fundamentals of Programming.",
   },
   {
     date: "Graduated 2023",

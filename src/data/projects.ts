@@ -12,11 +12,11 @@ export const projects: Project[] = [
   {
     id: "digital-umisa",
     title: "Digital UMISA",
-    role: "Tech Lead",
+    role: "Tech Lead & Developer",
     year: "2026",
     status: "shipped",
     description:
-      "Architected and built the official umisa.net platform from scratch. Led a team of developers and a designer. Full-stack with Next.js, Sanity CMS for dynamic content, and Supabase for the database.",
+      "Architected and built the official umisa.net platform from scratch. Led a team of developers and a designer while actively coding the full-stack with Next.js, Sanity CMS for dynamic content, and Supabase for the database. After launching v1, still developing new features and maintaining the platform post-launch.",
     tags: ["Next.js", "Sanity CMS", "Supabase", "TypeScript", "Tailwind"],
   },
   {
@@ -68,26 +68,6 @@ export const projects: Project[] = [
     description:
       "Personal finance system with user login and registration, hashed password security, and a Java interface connected to MySQL via JDBC. Built modularly with a team.",
     tags: ["Java", "MySQL", "JDBC", "Security"],
-  },
-  {
-    id: "umisa-mobile",
-    title: "UMISA Mobile App",
-    role: "Developer",
-    year: "2024",
-    status: "shipped",
-    description:
-      "Mobile platform for the UM International Students Association, built in Android Studio. Served as a hub for events, announcements, and student services.",
-    tags: ["Android Studio", "Java", "Firebase"],
-  },
-  {
-    id: "renteasy",
-    title: "RentEasy",
-    role: "Co-Founder & Developer",
-    year: "2025",
-    status: "in progress",
-    description:
-      "SaaS rental property management tool targeting Malaysian small landlords. Lean v1 focused on tenant tracking, rent status, WhatsApp reminders, and tenancy alerts.",
-    tags: ["Next.js", "SaaS", "WhatsApp API", "Malaysia"],
   },
   {
     id: "portfolio",
