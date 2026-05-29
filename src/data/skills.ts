@@ -6,11 +6,11 @@ export interface SkillGroup {
 export const skillGroups: SkillGroup[] = [
   {
     name: "Languages",
-    skills: ["Java", "Python", "JavaScript", "TypeScript", "Dart", "SQL / MySQL"],
+    skills: ["Java", "Python", "JavaScript", "TypeScript", "Dart", "SQL / MySQL", "HTML", "CSS"],
   },
   {
     name: "Frameworks & Backend",
-    skills: ["Next.js", "Flutter", "FastAPI", "Supabase", "Sanity CMS", "PostgreSQL"],
+    skills: ["React.js", "Next.js", "Node.js", "Flutter", "FastAPI", "Supabase", "Sanity CMS", "PostgreSQL"],
   },
   {
     name: "Tools",
