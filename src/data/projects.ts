@@ -40,9 +40,19 @@ export const projects: Project[] = [
     tags: ["Flutter", "Dart", "FastAPI", "PostgreSQL"],
   },
   {
+    id: "letterboxd-roaster",
+    title: "Letterboxd Roaster",
+    role: "Team Lead & Lead ML Engineer",
+    year: "2026",
+    status: "shipped",
+    description:
+      "Led the team and owned the core recommendation engine for a web app that analyzes your film taste, recommends new movies, and roasts you for them. The engine is a two-stage hybrid recommender: a content-based pass uses cosine similarity over movie feature vectors to pull a candidate shortlist, then an SVD collaborative-filtering model (trained with scikit-surprise) re-ranks those candidates by the predicted rating for a chosen viewer persona. The trained models are served from a FastAPI backend, the Gemini API generates a witty persona-driven roast per recommendation, and TMDB supplies poster art — all surfaced through a React + Vite frontend.",
+    tags: ["Python", "scikit-surprise", "FastAPI", "Gemini API", "React"],
+  },
+  {
     id: "bytelift",
     title: "ByteLift",
-    role: "Firebase Auth Developer",
+    role: "Mobile App Developer",
     year: "2025",
     status: "shipped",
     description:
@@ -83,7 +93,7 @@ export const projects: Project[] = [
     id: "portfolio",
     title: "This Portfolio",
     role: "Designer & Developer",
-    year: "2025",
+    year: "2026",
     status: "in progress",
     description:
       "Personal portfolio built with Astro and Tailwind. Dark techy aesthetic with Space Mono and Syne fonts. Deployed on Vercel.",
