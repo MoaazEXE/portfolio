@@ -26,7 +26,7 @@ export const projects: Project[] = [
     year: "2026",
     status: "shipped",
     description:
-      "Full-stack impulse-spending tracker built solo for the Shortcut Asia 2026 internship challenge. Users log items they want to buy, set a cooling period to think it over, then decide to skip or buy with a clear head. Tracks cumulative savings, streaks, and milestones. Features group expense splitting, multi-currency support, and a time-cost lens that converts any price into hours of your life.",
+      "Full-stack impulse-spending tracker built solo for the Shortcut Asia 2026 mini hackathon. Users log items they want to buy, set a cooling period to think it over, then decide to skip or buy with a clear head. Tracks cumulative savings, streaks, and milestones. Features group expense splitting, multi-currency support, and a time-cost lens that converts any price into hours of your life.",
     tags: ["Next.js", "Supabase", "Prisma", "TypeScript", "Tailwind"],
   },
   {
