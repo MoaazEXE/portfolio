@@ -1,0 +1,47 @@
+---
+import type { HTMLAttributes } from "astro/types";
+
+interface Props extends HTMLAttributes<"div"> {
+  /** Multiplier for the tilt angle (1 = default). */
+  strength?: number;
+  /** Cut the bottom-right corner for the chamfered "terminal" look. */
+  chamfer?: boolean;
+  /** Classes for the inner card surface (padding, layout, …). */
+  surfaceClass?: string;
+}
+
+const { strength = 1, chamfer = false, surfaceClass, class: className, ...rest } = Astro.props;
+---
+
+<div data-tilt={strength} class:list={["h-full", className]} {...rest}>
+  {!chamfer && <div class="tilt-glow" aria-hidden="true"></div>}
+  <div data-tilt-surface class:list={["border bg-card", chamfer && "chamfer", surfaceClass]}>
+    <slot />
+  </div>
+</div>
+
+<style>
+  .chamfer {
+    --cut: 20px;
+    clip-path: polygon(0 0, 100% 0, 100% calc(100% - var(--cut)), calc(100% - var(--cut)) 100%, 0 100%);
+  }
+
+  /* The clip-path removes the border along the cut, so redraw it as a diagonal line. */
+  .chamfer::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: var(--cut);
+    height: var(--cut);
+    pointer-events: none;
+    /* Its diagonal sits exactly on the cut; draw the 1px line on the inner side of it. */
+    background: linear-gradient(
+      to bottom right,
+      transparent calc(50% - 1.5px),
+      var(--edge) calc(50% - 1.5px),
+      var(--edge) 50%,
+      transparent 50%
+    );
+  }
+</style>

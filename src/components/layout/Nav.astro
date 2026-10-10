@@ -1,0 +1,158 @@
+---
+import Icon from "../ui/Icon.astro";
+import { navLinks, site } from "../../data/site";
+---
+
+<header
+  class="fixed inset-x-0 top-0 z-50 border-b border-border bg-canvas/85 backdrop-blur-md supports-[backdrop-filter]:bg-canvas/70"
+>
+  <nav
+    aria-label="Primary"
+    class="mx-auto flex h-16 max-w-6xl items-center justify-between px-5 sm:px-6 md:px-12"
+  >
+    <a
+      href="/#top"
+      class="cursor-blink font-mono text-lg font-bold tracking-tight text-accent"
+      aria-label={`${site.initials} — ${site.name}, back to top`}
+    >
+      {site.initials}
+    </a>
+
+    <ul class="hidden items-center gap-6 md:flex lg:gap-8">
+      {
+        navLinks.map((link) => (
+          <li>
+            <a
+              href={`/#${link.id}`}
+              data-nav-link={link.id}
+              class="font-mono text-xs tracking-[0.2em] text-muted uppercase transition-colors duration-300 hover:text-accent aria-[current=true]:text-accent"
+            >
+              {link.label}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+
+    <button
+      type="button"
+      id="menu-open"
+      class="-mr-2 p-2 text-muted transition-colors hover:text-accent md:hidden"
+      aria-label="Open menu"
+      aria-controls="mobile-menu"
+      aria-expanded="false"
+    >
+      <Icon name="menu" size={22} />
+    </button>
+  </nav>
+</header>
+
+<div
+  id="mobile-menu"
+  class="fixed inset-0 z-[55] hidden flex-col items-center justify-center gap-8 bg-canvas/95 backdrop-blur-md md:hidden"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Site menu"
+>
+  <button
+    type="button"
+    id="menu-close"
+    class="absolute top-3 right-3 p-2 text-muted transition-colors hover:text-accent sm:right-4"
+    aria-label="Close menu"
+  >
+    <Icon name="close" size={24} />
+  </button>
+  <ul class="flex flex-col items-center gap-8">
+    {
+      navLinks.map((link) => (
+        <li>
+          <a
+            href={`/#${link.id}`}
+            data-nav-link={link.id}
+            class="font-mono text-base tracking-[0.2em] text-muted uppercase transition-colors duration-300 hover:text-accent aria-[current=true]:text-accent"
+          >
+            {link.label}
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</div>
+
+<script>
+  const menu = document.getElementById("mobile-menu")!;
+  const openBtn = document.getElementById("menu-open")!;
+  const closeBtn = document.getElementById("menu-close")!;
+  const desktop = window.matchMedia("(min-width: 768px)");
+
+  // While the menu is open, everything behind it is inert so focus can't escape the dialog.
+  const background = document.querySelectorAll<HTMLElement>("body > header, body > main, body > footer");
+
+  const setMenuOpen = (open: boolean) => {
+    menu.classList.toggle("hidden", !open);
+    menu.classList.toggle("flex", open);
+    openBtn.setAttribute("aria-expanded", String(open));
+    document.body.style.overflow = open ? "hidden" : "";
+    background.forEach((el) => (el.inert = open));
+    (open ? closeBtn : openBtn).focus({ preventScroll: true });
+  };
+
+  openBtn.addEventListener("click", () => setMenuOpen(true));
+  closeBtn.addEventListener("click", () => setMenuOpen(false));
+  // The browser's own anchor jump runs while the body is still scroll-locked and
+  // gets swallowed, so close the menu first and scroll explicitly afterwards.
+  menu.querySelectorAll<HTMLAnchorElement>("a").forEach((link) => {
+    link.addEventListener("click", (event) => {
+      setMenuOpen(false);
+      const target = link.pathname === location.pathname ? document.querySelector(link.hash) : null;
+      if (!target) return; // Different page (e.g. the 404) — let the browser navigate.
+      event.preventDefault();
+      const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      target.scrollIntoView({ behavior: reduceMotion ? "instant" : "smooth", block: "start" });
+      history.pushState(null, "", link.hash);
+    });
+  });
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && !menu.classList.contains("hidden")) setMenuOpen(false);
+  });
+  // Rotating a tablet / resizing past the breakpoint must not leave the page scroll-locked.
+  desktop.addEventListener("change", (event) => {
+    if (event.matches && !menu.classList.contains("hidden")) setMenuOpen(false);
+  });
+
+  // Highlight the nav link of the section currently in view.
+  const links = document.querySelectorAll<HTMLAnchorElement>("[data-nav-link]");
+  const ids = [...new Set([...links].map((link) => link.dataset.navLink!))];
+  const lastId = ids.at(-1);
+
+  const setCurrent = (id: string | null) => {
+    links.forEach((link) => {
+      if (link.dataset.navLink === id) link.setAttribute("aria-current", "true");
+      else link.removeAttribute("aria-current");
+    });
+  };
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      for (const entry of entries) {
+        // The hero (#top) has no nav link, so reaching it clears the highlight.
+        if (entry.isIntersecting) setCurrent(entry.target.id === "top" ? null : entry.target.id);
+      }
+    },
+    // A thin band across the middle of the viewport decides the active section.
+    { rootMargin: "-45% 0px -55% 0px" },
+  );
+  ["top", ...ids]
+    .map((id) => document.getElementById(id))
+    .forEach((section) => section && observer.observe(section));
+
+  // The last section can be too short to ever reach the middle band on tall screens.
+  window.addEventListener(
+    "scroll",
+    () => {
+      const atBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2;
+      if (atBottom && lastId) setCurrent(lastId);
+    },
+    { passive: true },
+  );
+</script>

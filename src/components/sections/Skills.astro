@@ -1,0 +1,60 @@
+---
+import Section from "../ui/Section.astro";
+import TiltCard from "../ui/TiltCard.astro";
+import Tag from "../ui/Tag.astro";
+import { skillGroups } from "../../data/skills";
+---
+
+<Section id="skills" index="03" label="skills" title="Tech Stack">
+  <div id="skills-grid" class="relative grid grid-cols-1 gap-6 md:grid-cols-2">
+    <!-- Spotlight that follows the cursor across the whole grid. -->
+    <div id="skills-spotlight" class="spotlight pointer-events-none absolute inset-0 z-10" aria-hidden="true"></div>
+
+    {
+      skillGroups.map((group) => (
+        <div data-reveal>
+          <TiltCard strength={0.75} surfaceClass="flex flex-col gap-5 p-5 sm:p-6">
+            <h3 class="font-mono text-sm font-bold tracking-wide text-accent uppercase">{group.name}</h3>
+            <ul class="flex flex-wrap gap-2">
+              {group.skills.map((skill) => (
+                <Tag size="md">{skill}</Tag>
+              ))}
+            </ul>
+          </TiltCard>
+        </div>
+      ))
+    }
+  </div>
+</Section>
+
+<style>
+  .spotlight {
+    opacity: 0;
+    background: radial-gradient(
+      400px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+      rgb(0 229 160 / 0.06),
+      transparent 60%
+    );
+    transition: opacity 0.5s ease;
+  }
+
+  .spotlight.is-active {
+    opacity: 1;
+  }
+</style>
+
+<script>
+  const grid = document.getElementById("skills-grid");
+  const spotlight = document.getElementById("skills-spotlight");
+  const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+
+  if (grid && spotlight && finePointer) {
+    grid.addEventListener("pointerenter", () => spotlight.classList.add("is-active"));
+    grid.addEventListener("pointerleave", () => spotlight.classList.remove("is-active"));
+    grid.addEventListener("pointermove", (event) => {
+      const rect = grid.getBoundingClientRect();
+      spotlight.style.setProperty("--mouse-x", `${event.clientX - rect.left}px`);
+      spotlight.style.setProperty("--mouse-y", `${event.clientY - rect.top}px`);
+    });
+  }
+</script>

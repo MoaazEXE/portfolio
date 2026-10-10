@@ -1,0 +1,36 @@
+---
+import Section from "../ui/Section.astro";
+import { socials } from "../../data/site";
+---
+
+<Section id="contact" index="05" label="contact" title="Let's Build Something">
+  <div class="flex max-w-2xl flex-col gap-6" data-reveal>
+    <p class="leading-relaxed text-muted">
+      Have a project idea, a role in mind, or just want to talk tech? My inbox is open — reach out
+      through any of the links below.
+    </p>
+
+    <ul class="flex flex-col gap-1">
+      {
+        socials.map((social) => {
+          const external = !social.href.startsWith("mailto:");
+          return (
+            <li>
+              <a
+                href={social.href}
+                class="group flex items-center gap-3 py-1.5 text-primary transition-colors duration-300 hover:text-accent"
+                {...(external && { target: "_blank", rel: "noopener noreferrer" })}
+              >
+                <span class="w-20 shrink-0 font-mono text-xs text-muted transition-colors duration-300 group-hover:text-accent">
+                  {social.label}
+                </span>
+                <span class="min-w-0 text-sm [overflow-wrap:anywhere]">{social.handle}</span>
+                {external && <span class="sr-only">(opens in a new tab)</span>}
+              </a>
+            </li>
+          );
+        })
+      }
+    </ul>
+  </div>
+</Section>

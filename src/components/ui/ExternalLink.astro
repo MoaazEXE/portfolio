@@ -1,0 +1,26 @@
+---
+import Icon from "./Icon.astro";
+
+interface Props {
+  href: string;
+  variant?: "primary" | "secondary";
+}
+
+const { href, variant = "primary" } = Astro.props;
+---
+
+<a
+  href={href}
+  target="_blank"
+  rel="noopener noreferrer"
+  class:list={[
+    "inline-flex w-fit items-center gap-2 border px-3 py-1.5 font-mono text-xs transition-colors duration-300",
+    variant === "primary"
+      ? "border-accent/30 bg-accent/10 text-accent hover:border-accent/60 hover:bg-accent/20"
+      : "border-border text-muted hover:border-accent/60 hover:text-accent",
+  ]}
+>
+  <slot />
+  <Icon name="arrow-up-right" size={12} />
+  <span class="sr-only">(opens in a new tab)</span>
+</a>

@@ -1,0 +1,73 @@
+---
+import Section from "../ui/Section.astro";
+import TiltCard from "../ui/TiltCard.astro";
+
+const facts = [
+  { label: "Location", value: "Petaling Jaya, MY" },
+  { label: "University", value: "Universiti Malaya" },
+  { label: "Degree", value: "Software Engineering" },
+  { label: "Currently", value: "Rotate Asia · UMISA" },
+  { label: "Languages", value: "Arabic (native), English (fluent)" },
+  { label: "Interests", value: "Web, Mobile, Data Engineering, SaaS" },
+];
+---
+
+<Section id="about" index="01" label="about" title="Who I Am">
+  <div class="grid grid-cols-1 gap-10 lg:grid-cols-2 lg:gap-12">
+    <div class="flex flex-col gap-5 leading-relaxed text-muted" data-reveal>
+      <p>
+        I'm Moaaz — a Software Engineering student at Universiti Malaya. I spend most of my time
+        building real products, leading teams, and learning by shipping.
+      </p>
+      <p>
+        Right now I'm working with <strong class="font-semibold text-primary">Rotate Asia</strong> as a
+        Software & Data Engineer on a large production stack — including
+        <span class="text-primary">Angular</span> on the frontend, <span class="text-primary">Databricks</span>
+        on the data side, and <span class="text-primary">Cube.js</span> as the middleware between them —
+        working across both the application and the data layers.
+      </p>
+      <p>
+        I'm also <strong class="font-semibold text-primary">Head of the Technology Department at UMISA</strong>.
+        After architecting and shipping umisa.net from the ground up as Tech Lead, I now lead the tech
+        department through the 2026/27 session, continuing to maintain and improve the platform and
+        the association's technology as a whole.
+      </p>
+      <p>
+        I'm a fast learner and mostly self-taught — always curious to explore new frameworks,
+        tools, and technologies. I'm drawn to products that solve real problems for real people.
+      </p>
+    </div>
+
+    <div data-reveal>
+      <TiltCard strength={0.75} chamfer surfaceClass="p-5 sm:p-6">
+        <dl class="flex flex-col">
+          {
+            facts.map((fact) => (
+              <div class="fact-row flex items-baseline justify-between gap-4 border-b border-border py-3 first:pt-0">
+                <dt class="shrink-0 font-mono text-xs tracking-wide text-muted uppercase">{fact.label}</dt>
+                <dd class="text-right text-sm text-primary">{fact.value}</dd>
+              </div>
+            ))
+          }
+        </dl>
+      </TiltCard>
+    </div>
+  </div>
+</Section>
+
+<style>
+  /* Accent bar slides in from the left on hover. */
+  .fact-row {
+    border-left: 2px solid transparent;
+    transition:
+      padding-left 0.3s ease,
+      border-left-color 0.3s ease;
+  }
+
+  @media (hover: hover) {
+    .fact-row:hover {
+      padding-left: 0.75rem;
+      border-left-color: var(--color-accent);
+    }
+  }
+</style>

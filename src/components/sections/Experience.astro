@@ -1,0 +1,132 @@
+---
+import Section from "../ui/Section.astro";
+import { experiences } from "../../data/experience";
+---
+
+<Section id="experience" index="04" label="experience" title="Timeline">
+  <div id="timeline" class="timeline relative">
+    <div class="timeline-track" aria-hidden="true"></div>
+    <div class="timeline-progress" aria-hidden="true"></div>
+
+    <ol class="flex flex-col gap-8 md:gap-10">
+      {
+        experiences.map((exp) => (
+          <li class="group relative pl-8 sm:pl-10" data-reveal>
+            <span class="timeline-dot" aria-hidden="true" />
+
+            <div class="entry rounded-sm border border-transparent p-4">
+              <div class="mb-1 flex flex-wrap items-center gap-x-3 gap-y-1">
+                <span class="font-mono text-xs tracking-wide text-accent">{exp.date}</span>
+                <span
+                  class:list={[
+                    "rounded-sm px-1.5 py-px font-mono text-[10px] tracking-wider uppercase",
+                    exp.kind === "work" ? "bg-accent/10 text-accent" : "bg-accent-blue/10 text-accent-blue",
+                  ]}
+                >
+                  {exp.kind}
+                </span>
+                {exp.current && (
+                  <span class="font-mono text-[10px] tracking-wider text-muted uppercase">● current</span>
+                )}
+              </div>
+              <h3 class="font-sans text-lg font-bold text-white transition-colors duration-300 group-hover:text-accent">
+                {exp.role}
+              </h3>
+              <p class="mb-2 text-sm text-muted">{exp.org}</p>
+              {exp.note && <p class="mb-2 font-mono text-[11px] text-accent/80">{exp.note}</p>}
+              <p class="max-w-3xl text-sm leading-relaxed text-muted">{exp.description}</p>
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</Section>
+
+<style>
+  .timeline {
+    --line-x: 0.375rem; /* centre of the line; dots are centred on it */
+  }
+
+  .timeline-track,
+  .timeline-progress {
+    position: absolute;
+    top: 0;
+    left: var(--line-x);
+    width: 1px;
+    transform: translateX(-50%);
+  }
+
+  .timeline-track {
+    bottom: 0;
+    background: var(--color-border);
+  }
+
+  .timeline-progress {
+    height: 100%;
+    background: var(--color-accent);
+    transform-origin: top;
+    transform: translateX(-50%) scaleY(var(--progress, 0));
+    transition: transform 0.15s linear;
+  }
+
+  .timeline-dot {
+    position: absolute;
+    top: 1.5rem; /* aligns with the date line inside the padded entry */
+    left: var(--line-x);
+    width: 0.75rem;
+    height: 0.75rem;
+    background: var(--color-accent);
+    transform: translate(-50%, -50%) rotate(45deg);
+    transition:
+      transform 0.3s ease,
+      box-shadow 0.3s ease;
+  }
+
+  .entry {
+    transition:
+      transform 0.3s ease,
+      background-color 0.3s ease,
+      border-color 0.3s ease,
+      box-shadow 0.3s ease;
+  }
+
+  @media (hover: hover) {
+    .group:hover .timeline-dot {
+      transform: translate(-50%, -50%) rotate(45deg) scale(1.5);
+      box-shadow: 0 0 12px rgb(0 229 160 / 0.6);
+    }
+
+    .group:hover .entry {
+      transform: translateX(0.5rem);
+      background-color: var(--color-card);
+      border-color: var(--color-border);
+      box-shadow: 0 0 24px rgb(0 229 160 / 0.08);
+    }
+  }
+</style>
+
+<script>
+  // Fill the timeline line as the reader scrolls through it.
+  const timeline = document.getElementById("timeline");
+
+  if (timeline) {
+    let frame = 0;
+
+    const update = () => {
+      frame = 0;
+      const rect = timeline.getBoundingClientRect();
+      // Progress is measured against the middle of the viewport.
+      const progress = (window.innerHeight * 0.6 - rect.top) / rect.height;
+      timeline.style.setProperty("--progress", Math.min(Math.max(progress, 0), 1).toFixed(3));
+    };
+
+    const schedule = () => {
+      if (!frame) frame = requestAnimationFrame(update);
+    };
+
+    window.addEventListener("scroll", schedule, { passive: true });
+    window.addEventListener("resize", schedule, { passive: true });
+    update();
+  }
+</script>
