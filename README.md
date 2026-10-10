@@ -19,7 +19,7 @@ src/
 │   └── ui/            # Reusable building blocks (Section, TiltCard, Tag, …)
 ├── data/              # All content lives here — edit these to update the site
 │   ├── site.ts        # Name, contact links, nav, SEO defaults
-│   ├── experience.ts  # Timeline (work + education), newest first
+│   ├── experience.ts  # Timeline (work + education), oldest first
 │   ├── projects.ts    # Project cards and their links
 │   └── skills.ts      # Skill groups
 ├── layouts/           # BaseLayout (head, meta, global scripts)

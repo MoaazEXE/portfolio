@@ -26,7 +26,7 @@ export const experiences: Experience[] = [
   {
     id: "um",
     kind: "education",
-    date: "Oct 2024 – Feb 2028",
+    date: "Oct 2024 – Mar 2028",
     role: "Bachelor in Software Engineering",
     org: "Universiti Malaya",
     description:
