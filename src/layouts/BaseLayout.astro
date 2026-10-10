@@ -1,0 +1,90 @@
+---
+import "../styles/global.css";
+import Analytics from "@vercel/analytics/astro";
+import SpeedInsights from "@vercel/speed-insights/astro";
+import { getImage } from "astro:assets";
+import Nav from "../components/layout/Nav.astro";
+import Footer from "../components/layout/Footer.astro";
+import profilePhoto from "../assets/profile.jpg";
+import { site } from "../data/site";
+
+interface Props {
+  title?: string;
+  description?: string;
+  /** Keep the page out of search results (e.g. the 404 page). */
+  noindex?: boolean;
+}
+
+const { title = site.title, description = site.description, noindex = false } = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, Astro.site ?? site.url).href;
+const ogImage = await getImage({ src: profilePhoto, width: 630, format: "jpg" });
+const ogImageUrl = new URL(ogImage.src, Astro.site ?? site.url).href;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#0a0a0f" />
+    <meta name="color-scheme" content="dark" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="author" content={site.name} />
+    {noindex ? <meta name="robots" content="noindex" /> : <link rel="canonical" href={canonical} />}
+
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageUrl} />
+
+    <link rel="icon" href="/favicon.ico" sizes="48x48" />
+    <link rel="icon" type="image/png" href="/favicon-32.png" sizes="32x32" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap"
+    />
+
+    <!-- Flag JS before first paint so reveal-on-scroll never hides content without JS.
+         If the bundled scripts never boot (blocked, failed to load), un-hide everything. -->
+    <script is:inline>
+      document.documentElement.classList.add("js");
+      setTimeout(function () {
+        if (!window.__revealReady) document.documentElement.classList.remove("js");
+      }, 3000);
+    </script>
+    <SpeedInsights />
+  </head>
+  <body class="bg-canvas font-sans text-primary antialiased">
+    <a
+      href="#main"
+      class="sr-only z-[60] bg-accent px-4 py-2 font-mono text-sm text-canvas focus:not-sr-only focus:fixed focus:top-3 focus:left-3"
+    >
+      Skip to content
+    </a>
+    <Nav />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer />
+    <Analytics />
+
+    <script>
+      import { initReveal } from "../scripts/reveal";
+      import { initTilt } from "../scripts/tilt";
+
+      initReveal();
+      initTilt();
+    </script>
+  </body>
+</html>

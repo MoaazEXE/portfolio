@@ -6,35 +6,41 @@ export interface SkillGroup {
 export const skillGroups: SkillGroup[] = [
   {
     name: "Languages",
-    skills: ["Java", "Python", "JavaScript", "TypeScript", "Dart", "SQL / MySQL", "HTML", "CSS"],
+    skills: ["TypeScript", "JavaScript", "Python", "Java", "Dart", "SQL", "HTML", "CSS"],
   },
   {
-    name: "Frameworks & Backend",
-    skills: ["React.js", "Next.js", "Node.js", "Flutter", "FastAPI", "Supabase", "Sanity CMS", "PostgreSQL"],
+    name: "Frontend & Mobile",
+    skills: ["React.js", "Next.js", "Angular", "Flutter", "Tailwind CSS", "Android (Java)"],
+  },
+  {
+    name: "Backend & CMS",
+    skills: ["Node.js", "Express", "FastAPI", "Supabase", "Firebase", "Sanity CMS", "Prisma"],
+  },
+  {
+    name: "Data Engineering",
+    skills: ["Databricks", "Cube.js", "PostgreSQL", "MySQL", "MongoDB", "Oracle APEX"],
   },
   {
     name: "Tools",
     skills: [
-      "VS Code",
-      "Visual Studio 2022",
-      "Android Studio",
-      "Google Colab",
       "Git",
+      "VS Code",
       "Claude Code",
-      "Firebase",
       "Antigravity",
+      "Android Studio",
       "Jupyter Notebook",
-      "Oracle APEX",
       "Figma",
+      "Vercel",
     ],
   },
   {
     name: "Core Competencies",
     skills: [
       "Full-Stack Development",
+      "Data Pipelines",
       "Mobile App Development",
+      "Database Design",
       "Data Structures",
-      "Problem Solving",
       "Team Leadership",
     ],
   },

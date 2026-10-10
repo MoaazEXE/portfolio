@@ -17,6 +17,7 @@ pnpm-debug.log*
 .env
 .env.local
 .env.production
+.env.*
 
 # macOS-specific files
 .DS_Store
@@ -28,3 +29,7 @@ pnpm-debug.log*
 
 .claude
 
+# AI tooling
+CLAUDE.md
+AGENTS.md
+.cursor/

@@ -1,57 +1,67 @@
 @import "tailwindcss";
 
 @theme {
-  --color-base: #0a0a0f;
+  --color-canvas: #0a0a0f;
   --color-surface: #111118;
   --color-card: #16161f;
   --color-accent: #00e5a0;
   --color-accent-blue: #0099ff;
   --color-primary: #e8e8f0;
-  --color-muted: #6a6a80;
-  --color-border: rgba(255, 255, 255, 0.07);
+  --color-muted: #8a8aa0;
+  --color-border: rgb(255 255 255 / 0.08);
 
   --font-sans: "Syne", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "Space Mono", ui-monospace, monospace;
 }
 
-html {
-  scroll-behavior: smooth;
+/* ---------- Base ---------- */
+
+@layer base {
+  html {
+    background-color: var(--color-canvas);
+    color: var(--color-primary);
+    scroll-behavior: smooth;
+    /* Keep anchored sections clear of the fixed nav. */
+    scroll-padding-top: 5rem;
+    scrollbar-color: var(--color-accent) var(--color-canvas);
+    scrollbar-width: thin;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    min-height: 100dvh;
+    overflow-x: clip;
+  }
+
+  ::selection {
+    background-color: rgb(0 229 160 / 0.3);
+    color: var(--color-primary);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
 }
 
-html,
-body {
-  background-color: #0a0a0f;
-  color: #e8e8f0;
-}
-
-::selection {
-  background-color: rgba(0, 229, 160, 0.3);
-  color: #e8e8f0;
-}
-
-::-webkit-scrollbar {
-  width: 6px;
-}
-
-::-webkit-scrollbar-track {
-  background: #0a0a0f;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #00e5a0;
-  border-radius: 3px;
-}
-
-html {
-  scrollbar-color: #00e5a0 #0a0a0f;
-  scrollbar-width: thin;
-}
+/* ---------- Blinking cursor (nav logo) ---------- */
 
 @keyframes blink {
-  0%, 50% {
-    opacity: 1;
-  }
-  51%, 100% {
+  50% {
     opacity: 0;
   }
 }
@@ -61,21 +71,92 @@ html {
   animation: blink 1s step-end infinite;
 }
 
-@keyframes fadeInUp {
+/* ---------- Scroll reveal ----------
+   Content is only hidden once JS has booted (`.js` on <html>), so the page
+   stays readable if scripts fail or are blocked. */
+
+@keyframes reveal {
   from {
     opacity: 0;
     transform: translateY(24px);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: none;
   }
 }
 
-.fade-in-up {
+.js [data-reveal] {
   opacity: 0;
 }
 
-.fade-in-up.visible {
-  animation: fadeInUp 0.6s ease-out forwards;
+.js [data-reveal].is-visible {
+  animation: reveal 0.6s ease-out forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .js [data-reveal] {
+    opacity: 1;
+  }
+}
+
+/* ---------- Tilt cards ----------
+   The wrapper ([data-tilt]) never transforms, so pointer maths stay stable.
+   The inner surface ([data-tilt-surface]) receives the transform from tilt.ts.
+   The glow is a sibling layer behind the surface, so it is never clipped by
+   the card's own clip-path or covered by its background. */
+
+[data-tilt] {
+  position: relative;
+  isolation: isolate;
+}
+
+[data-tilt-surface] {
+  --edge: var(--color-border);
+  position: relative;
+  height: 100%;
+  border-color: var(--edge);
+  transform-origin: center;
+  transition:
+    transform 0.25s ease-out,
+    border-color 0.3s ease;
+}
+
+.tilt-glow {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0;
+  background: linear-gradient(135deg, rgb(0 229 160 / 0.35), transparent 45%, rgb(0 153 255 / 0.3));
+  filter: blur(14px);
+  transition: opacity 0.4s ease;
+}
+
+[data-tilt]:has(.chamfer) {
+  transition: filter 0.4s ease;
+}
+
+@media (hover: hover) {
+  /* Lift the hovered card so its glow paints over its neighbours evenly. */
+  [data-tilt]:hover {
+    z-index: 1;
+  }
+
+  [data-tilt]:hover [data-tilt-surface] {
+    will-change: transform;
+  }
+
+  [data-tilt]:has(.chamfer):hover {
+    filter: drop-shadow(0 0 14px rgb(0 229 160 / 0.22));
+  }
+
+  [data-tilt]:hover .tilt-glow,
+  [data-tilt]:focus-within .tilt-glow {
+    opacity: 0.6;
+  }
+
+  [data-tilt]:hover [data-tilt-surface] {
+    --edge: rgb(0 229 160 / 0.35);
+  }
 }
