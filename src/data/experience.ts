@@ -13,8 +13,34 @@ export interface Experience {
   current?: boolean;
 }
 
-/** Current work first, then past roles and education, newest first. */
+/** Chronological: oldest first, so the timeline reads top to bottom. */
 export const experiences: Experience[] = [
+  {
+    id: "high-school",
+    kind: "education",
+    date: "Graduated 2023",
+    role: "High School Diploma",
+    org: "Al Uloom Al Shariea High School",
+    description: "GPA 4.0 / 4.0",
+  },
+  {
+    id: "um",
+    kind: "education",
+    date: "Oct 2024 – Feb 2028",
+    role: "Bachelor in Software Engineering",
+    org: "Universiti Malaya",
+    description:
+      "CGPA 3.30 / 4.00. Relevant courses: Mobile App Development, Databases, Web Programming, Machine Learning, Data Structures, Algorithms, Software Modeling, Software Maintenance and Evolution, Project Management.",
+  },
+  {
+    id: "umisa-tech-lead",
+    kind: "work",
+    date: "Feb 2026 – Sep 2026",
+    role: "Technical Lead",
+    org: "UMISA — Universiti Malaya International Students' Association",
+    description:
+      "Led the technical direction of Digital UMISA (umisa.net). Architected the Next.js, Sanity CMS and Supabase platform, managed sprint delivery, and led a team of developers and a designer while actively writing code through launch and post-launch iterations.",
+  },
   {
     id: "rotate",
     kind: "work",
@@ -30,37 +56,11 @@ export const experiences: Experience[] = [
     kind: "work",
     date: "Oct 2026 – Present",
     role: "Head of Department — Technology",
-    note: "↑ Continued from Technical Lead (Feb – Sep 2026)",
+    note: "Continued from Technical Lead (Feb – Sep 2026)",
     org: "UMISA — Universiti Malaya International Students' Association",
     description:
       "Appointed Head of the Technology Department for the 2026/2027 session. Leading the tech department to keep maintaining and improving umisa.net and the association's wider technology.",
     current: true,
-  },
-  {
-    id: "umisa-tech-lead",
-    kind: "work",
-    date: "Feb 2026 – Sep 2026",
-    role: "Technical Lead",
-    org: "UMISA — Universiti Malaya International Students' Association",
-    description:
-      "Led the technical direction of Digital UMISA (umisa.net). Architected the Next.js, Sanity CMS and Supabase platform, managed sprint delivery, and led a team of developers and a designer while actively writing code through launch and post-launch iterations.",
-  },
-  {
-    id: "um",
-    kind: "education",
-    date: "Oct 2024 – Feb 2028",
-    role: "Bachelor in Software Engineering",
-    org: "Universiti Malaya",
-    description:
-      "CGPA 3.30 / 4.00. Relevant courses: Mobile App Development, Databases, Web Programming, Machine Learning, Data Structures, Algorithms, Software Modeling, Software Maintenance and Evolution, Project Management.",
-  },
-  {
-    id: "high-school",
-    kind: "education",
-    date: "Graduated 2023",
-    role: "High School Diploma",
-    org: "Al Uloom Al Shariea High School",
-    description: "GPA 4.0 / 4.0",
   },
 ];
 
