@@ -86,7 +86,10 @@ import { navLinks, site } from "../../data/site";
   const desktop = window.matchMedia("(min-width: 768px)");
 
   // While the menu is open, everything behind it is inert so focus can't escape the dialog.
-  const background = document.querySelectorAll<HTMLElement>("body > header, body > main, body > footer");
+  // Everything except the menu itself (including the skip link), so Shift+Tab can't escape.
+  const background = [...document.body.children].filter(
+    (el): el is HTMLElement => el instanceof HTMLElement && el !== menu,
+  );
 
   const setMenuOpen = (open: boolean) => {
     menu.classList.toggle("hidden", !open);
@@ -139,8 +142,9 @@ import { navLinks, site } from "../../data/site";
         if (entry.isIntersecting) setCurrent(entry.target.id === "top" ? null : entry.target.id);
       }
     },
-    // A thin band across the middle of the viewport decides the active section.
-    { rootMargin: "-45% 0px -55% 0px" },
+    // A thin (10%) band across the middle of the viewport decides the active section.
+    // It needs real height: margins summing to 100% leave a zero-height root.
+    { rootMargin: "-45% 0px -45% 0px" },
   );
   ["top", ...ids]
     .map((id) => document.getElementById(id))
