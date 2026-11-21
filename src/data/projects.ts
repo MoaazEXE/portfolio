@@ -31,6 +31,17 @@ export const projects: Project[] = [
     links: [{ label: "Visit umisa.net", href: "https://umisa.net" }],
   },
   {
+    id: "bubbles-tracker",
+    title: "Bubbles Tracker",
+    role: "Solo Full-Stack Developer",
+    year: "2026",
+    status: "shipped",
+    description:
+      "Private, end-to-end encrypted task tracker built for a student organisation's secretary to follow up with every head of department. An installable offline-first PWA that encrypts every change on the device before it syncs, with Google and QR device sign-in, a Telegram bot and Mini App, push reminders, Excel/CSV import and export, and share links whose key never reaches the server. Pink by default, with themes that all pass WCAG AA contrast. Now building 2.0: shared encrypted team workspaces with roles and automatic key rotation.",
+    tags: ["React", "TypeScript", "Automerge", "Supabase", "Web Crypto", "Tailwind"],
+    links: [{ label: "Visit Bubbles Tracker", href: "https://bubblestracker.vercel.app" }],
+  },
+  {
     id: "settle",
     title: "Settle",
     role: "Solo Full-Stack Developer",
