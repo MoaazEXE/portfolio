@@ -42,6 +42,19 @@ export const projects: Project[] = [
     links: [{ label: "Visit Bubbles Tracker", href: "https://bubblestracker.vercel.app" }],
   },
   {
+    id: "hunt-it",
+    title: "Hunt It! Crashed in the Wild",
+    role: "Solo Game Developer",
+    year: "2026",
+    status: "shipped",
+    description:
+      "Open-world hunting game, live and public on Roblox. You crash-land on a wild island and hunt your way across five territories, from a twig slingshot up to a full-auto M4 with recoil, reloads, overheating and attachments. Co-op boss fights end in a fire-breathing wyvern, and every catch can be mounted in your own two-floor trophy camp for passive income. Server-authoritative combat, persistent DataStore saves, leaderboards, pets, gacha weapon skins, daily contracts, rebirths and a guided tutorial.",
+    tags: ["Roblox Studio", "Luau", "DataStores", "Game Design"],
+    links: [
+      { label: "Play on Roblox", href: "https://www.roblox.com/games/106765477684391/Hunt-It-Crashed-in-the-Wild" },
+    ],
+  },
+  {
     id: "settle",
     title: "Settle",
     role: "Solo Full-Stack Developer",
